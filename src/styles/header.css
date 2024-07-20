@@ -1,0 +1,98 @@
+header {
+    background: #365;
+    color: #fefcfc;
+    padding: 1rem 4;
+    position: sticky;
+    top: 45;
+    z-index: 1000;
+}
+
+header .logo {
+    float: left;
+    font-size: 1.5rem;
+}
+
+header nav {
+    float: right;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0; /* Fixed padding issue */
+}
+
+header nav ul li {
+    display: inline;
+    margin-left: 1rem;
+    position: relative; /* Make dropdown positioning relative to this */
+}
+
+header nav ul li a {
+    color: #1a1717;
+    text-decoration: none;
+}
+
+header nav ul li a:hover,
+header nav ul li a:focus {
+    color: #e6e5ed;
+}
+
+.login-btn {
+    background: #f4b465;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: #333;
+}
+
+.nav-link.active {
+    color: #f4f3f1;
+}
+
+/* Navbar Dropdown Menu */
+.nav-dropdown {
+    position: relative; /* Make sure dropdown is positioned correctly */
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Default positioning */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 200px; /* Adjust width as needed */
+    z-index: 1000; /* Ensure it appears on top */
+}
+
+.dropdown-menu li {
+    margin: 5px 0;
+}
+
+.dropdown-menu a {
+    color: #c61818;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #55be18;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header nav {
+        display: none; /* Hide nav for small screens */
+    }
+    
+    /* Adjust other styles as needed */
+}
