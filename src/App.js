@@ -10,18 +10,33 @@ import './styles/footer.css';
 import './styles/panditjistyle.css';
 import './styles/maidstyles.css';
 
-const App = () => (
-  <Router>
-    <Header />
-    <main>
-      <Routes>
-        <Route path="/" element={<FindMyPanditji />} />
-        <Route path="/findmypanditji" element={<FindMyPanditji />} />
-        <Route path="/findmymaid" element={<FindMyMaid />} />
-      </Routes>
-    </main>
-    <Footer />
-  </Router>
-);
+// const App = () => (
+//   <Router>
+//     <Header />
+//     <main>
+//       <Routes>
+//         <Route path="/" element={<Authentication />} />
+//         <Route path="/findmypanditji" element={<FindMyPanditji />} />
+//         <Route path="/findmymaid" element={<FindMyMaid />} />
+//       </Routes>
+//     </main>
+//     <Footer />
+//   </Router>
+// );
 
+// export default App;
+
+// import React from 'react';
+// import FindMyPanditji from './components/FindMyPanditji';
+import Authentication from './components/Authorization';
+
+const App = () => {
+    return (
+        <div>
+            <h1>Welcome to Find My Panditji</h1>
+            <Authentication />
+            <FindMyPanditji />
+        </div>
+    );
+};
 export default App;
