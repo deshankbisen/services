@@ -1,42 +1,40 @@
-// src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer';
-import FindMyPanditji from './components/FindMyPanditji';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
 import FindMyMaid from './components/FindMyMaid';
+import FindMyPanditji from './components/FindMyPanditji';
+import './styles/App.css';
+import Footer from './components/Footer';
 import './styles/header.css';
 import './styles/footer.css';
 import './styles/panditjistyle.css';
 import './styles/maidstyles.css';
+import RegisterPanditji from './components/PanditjiRegister';
 
-// const App = () => (
-//   <Router>
-//     <Header />
-//     <main>
-//       <Routes>
-//         <Route path="/" element={<Authentication />} />
-//         <Route path="/findmypanditji" element={<FindMyPanditji />} />
-//         <Route path="/findmymaid" element={<FindMyMaid />} />
-//       </Routes>
-//     </main>
-//     <Footer />
-//   </Router>
-// );
+const App = () =>  {
+  return (
+    <div className="App">
+    <Router>
+      <Header />
+      <RegisterPanditji />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/findmypanditji" element={<FindMyPanditji />} />
+        <Route path="/findmymaid" element={<FindMyMaid />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Navigate to="/findmypanditji" />} />
+      </Routes>
+      <Footer />
+    </Router>
+    </div>
+  );
+}
 
-// export default App;
-
-// import React from 'react';
-// import FindMyPanditji from './components/FindMyPanditji';
-import Authentication from './components/Authorization';
-
-const App = () => {
-    return (
-        <div>
-            <h1>Welcome to Find My Panditji</h1>
-            <Authentication />
-            <FindMyPanditji />
-        </div>
-    );
-};
 export default App;
+
