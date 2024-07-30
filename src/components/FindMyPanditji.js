@@ -32,7 +32,7 @@ const FindMyPanditji = () => {
     useEffect(() => {
         const fetchCities = async () => {
             try {
-                const response = await fetch('http://localhost:8000/services/get_unique_cities/');
+                const response = await fetch('https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/get_unique_cities/');
                 const data = await response.json();
                 setCities(data);
                 console.log('Cities loaded:', data);
@@ -48,7 +48,7 @@ const FindMyPanditji = () => {
         const fetchAreas = async () => {
             if (selectedCity) {
                 try {
-                    const response = await fetch(`http://localhost:8000/services/get_unique_areas/?city=${encodeURIComponent(selectedCity)}`);
+                    const response = await fetch(`https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/get_unique_areas/?city=${encodeURIComponent(selectedCity)}`);
                     const data = await response.json();
                     setAreas(data);
                     console.log('Areas loaded:', data);
@@ -73,7 +73,7 @@ const FindMyPanditji = () => {
 
     const handleFindPanditJi = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/services/find_panditji/?city=${encodeURIComponent(selectedCity)}&area=${encodeURIComponent(selectedArea)}`);
+            const response = await fetch(`https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/find_panditji/?city=${encodeURIComponent(selectedCity)}&area=${encodeURIComponent(selectedArea)}`);
             const data = await response.json();
             setPanditJis(data);
             setIsPanditJiVisible(true);
@@ -101,7 +101,7 @@ const FindMyPanditji = () => {
       const csrftoken = getCookie('csrftoken');
   
       try {
-          const response = await fetch('http://localhost:8000/services/book_panditji/', {
+          const response = await fetch('https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/book_panditji/', {
               method: 'POST',
               headers: {
                   'X-CSRFToken': csrftoken,
