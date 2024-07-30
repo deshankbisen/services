@@ -10,9 +10,7 @@ import calender from '../assets/images/calender.jpg';
 import worship from '../assets/images/worship.jpg';
 
 const FindMyPanditji = () => {
-    const [showPopup, setShowPopup] = useState(false);
-    const [headerContent, setHeaderContent] = useState('');
-    const [footerContent, setFooterContent] = useState('');
+    // const [showPopup, setShowPopup] = useState(false);
     const [cities, setCities] = useState([]);
     const [areas, setAreas] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
@@ -30,22 +28,6 @@ const FindMyPanditji = () => {
       poojaType: '',
       poojanSamagri: false,
     });
-
-    useEffect(() => {
-        const fetchHTML = async () => {
-            try {
-                const headerResponse = await fetch('/header.html');
-                const footerResponse = await fetch('/footer.html');
-                setHeaderContent(await headerResponse.text());
-                setFooterContent(await footerResponse.text());
-                console.log('Header and footer content loaded');
-            } catch (error) {
-                console.error('Error fetching header or footer:', error);
-            }
-        };
-
-        fetchHTML();
-    }, []);
 
     useEffect(() => {
         const fetchCities = async () => {
@@ -109,41 +91,6 @@ const FindMyPanditji = () => {
     const handleBookingClick = (panditji) => {
         setSelectedPanditji(panditji);
         setShowBookingPopup(true);
-    };
-
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        console.log('Form submission initiated');
-
-        const form = event.target;
-        const formData = new FormData(form);
-
-        // Get CSRF token from cookies
-        const csrftoken = getCookie('csrftoken');
-
-        try {
-            const response = await fetch('https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/register_panditji/', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken,
-                    'Accept': 'application/json',
-                    // Note: Do not set 'Content-Type' manually; let the browser set it.
-                },
-                body: formData,
-            });
-            const data = await response.json();
-            if (data.success) {
-                alert("Pandit Ji registered successfully!");
-                form.reset();
-                setShowPopup(false);
-                console.log('Pandit Ji registered successfully');
-            } else {
-                alert("Error registering Pandit Ji.");
-                console.log('Error registering Pandit Ji:', data.errors);
-            }
-        } catch (error) {
-            console.error("Error:", error);
-        }
     };
 
     const handleBookingFormSubmit = async (event) => {
@@ -211,8 +158,9 @@ const FindMyPanditji = () => {
 
     return (
         <div>
-            <div id="header" dangerouslySetInnerHTML={{ __html: headerContent }}></div>
+
             <main>
+
                 <section className="hero">
                     <div className="container">
                         <h1>Find the Best Pandit Ji for Your Pooja Needs</h1>
@@ -367,49 +315,7 @@ const FindMyPanditji = () => {
                         </div>
                     </div>
                 </section>
-                <button id="registerPanditjiBtn" onClick={() => setShowPopup(true)}>Be a Pandit Ji</button>
-                {showPopup && (
-                    <div id="panditjiPopup" className="popup" onClick={(e) => {
-                        if (e.target === e.currentTarget) {
-                            setShowPopup(false);
-                        }
-                    }}>
-                        <div className="popup-content">
-                            <span className="close" onClick={() => setShowPopup(false)}>&times;</span>
-                            <h2>Register as Pandit Ji</h2>
-                            <form id="panditjiForm" onSubmit={handleFormSubmit} encType="multipart/form-data">
-                                <label htmlFor="firstName">First Name:</label>
-                                <input type="text" id="firstName" name="firstName" required />
-
-                                <label htmlFor="lastName">Last Name:</label>
-                                <input type="text" id="lastName" name="lastName" required />
-
-                                <label htmlFor="qualification">Qualification:</label>
-                                <input type="text" id="qualification" name="qualification" required />
-
-                                <label htmlFor="speciality">Speciality:</label>
-                                <input type="text" id="speciality" name="speciality" required />
-
-                                <label htmlFor="experience">Experience (in years):</label>
-                                <input type="number" id="experience" name="experience" required />
-
-                                <label htmlFor="city">City:</label>
-                                <input type="text" id="city" name="city" required />
-
-                                <label htmlFor="area">Area:</label>
-                                <input type="text" id="area" name="area" required />
-
-                                <label htmlFor="mobileNumber">Mobile Number:</label>
-                                <input type="tel" id="mobileNumber" name="mobileNumber" required />
-
-                                <label htmlFor="fileUpload">Upload Document (JPG, PDF, PNG):</label>
-                                <input type="file" id="fileUpload" name="fileUpload" accept=".jpg, .jpeg, .png, .pdf" required />
-
-                                <button type="submit">Register</button>
-                            </form>
-                        </div>
-                    </div>
-                )}
+ 
                 <section className="how-it-works">
                     <div className="container">
                         <h2>How It Works</h2>
@@ -449,7 +355,7 @@ const FindMyPanditji = () => {
                     </div>
                 </section>
             </main>
-            <div id="footer" dangerouslySetInnerHTML={{ __html: footerContent }}></div>
+            
         </div>
     );
 };

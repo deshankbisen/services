@@ -1,0 +1,39 @@
+/* Testimonials */
+.testimonials {
+    padding: 2rem 0;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.testimonials h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background: #f4b400;
+    display: block;
+    margin: 1rem auto;
+}
+
+.testimonial-carousel {
+    display: flex;
+    justify-content: space-around;
+}
+
+.testimonial {
+    width: 45%;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
