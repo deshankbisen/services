@@ -14,7 +14,7 @@ const RegisterPanditji = () => {
         const csrftoken = getCookie('csrftoken');
 
         try {
-            const response = await fetch('http://localhost:8000/services/register_panditji/', {
+            const response = await fetch('https://findmypanditjibackend-d94611cee10f.herokuapp.com/services/register_panditji/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrftoken,
@@ -92,7 +92,7 @@ const RegisterPanditji = () => {
                             <input type="tel" id="mobileNumber" name="mobileNumber" required />
 
                             <label htmlFor="fileUpload">Upload Document (JPG, PDF, PNG):</label>
-                            <input type="file" id="fileUpload" name="fileUpload" accept=".jpg, .jpeg, .png, .pdf" required />
+                            <input type="file" id="fileUpload" name="fileUpload" accept=".jpg, .jpeg, .png, .pdf" />
 
                             <button type="submit">Register</button>
                         </form>
