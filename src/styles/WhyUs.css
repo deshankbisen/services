@@ -1,23 +1,34 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
 /* Featured Services */
 .featured-servicess {
-    /* background: url('../assets/images/WhyUs.jpg') no-repeat center center/cover; Background image */
     background: linear-gradient(to bottom, #f5c96c, #f7d28b, #f9e4a5, #fdf6e3, #ffffff);
     padding: 2rem 0;
     text-align: center;
     overflow: visible;
-    box-shadow: #121009; /* This should be used if it's meant to be a shadow color */
+    box-shadow: #121009; /* If intended as a shadow, add proper values */
 }
 
 .featured-servicess h2 {
     font-size: 2rem !important;
     margin-bottom: 1rem;
     position: relative;
-    font-style: oblique;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
 }
 
 .featured-servicess h2::after {
-    content: '  ';
+    content: '';
     width: 100px;
     height: 3px;
     background: #f4b400;
@@ -32,17 +43,22 @@
 }
 
 .services {
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .service {
-    width: 30% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 30%;
     background: #44414100;
-    padding: 1rem !important;
+    padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(235, 6, 6, 0.1);
     transition: transform 0.3s;
+    margin: 1rem 0.5rem;
 }
 
 .service img {
@@ -51,13 +67,13 @@
 }
 
 .service:hover {
-    transform: translateY(-50px);
+    transform: translateY(-10px);
 }
 
 .featured-servicess .details p {
     margin: 0;
-    text-align: left; /* Ensures the text is left-aligned */
-    white-space: pre-wrap; /* Preserves the line breaks in the details */
+    text-align: left;
+    white-space: pre-wrap;
 }
 
 .language-switcher {
@@ -93,18 +109,45 @@
     position: relative;
     font-size: medium !important;
     font-weight: bold !important;
-}
-
-.featured-servicess .services .service:hover {
-    background-color: #f9f9f9;
-    font-size: small !important;
-}
-
-.featured-servicess .services .service h3 {
     margin-bottom: 10px;
 }
 
 .featured-servicess .services .service p {
     margin-top: 0;
     text-align: left;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .service {
+        width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .service {
+        width: 100%;
+    }
+
+    .featured-servicess h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .featured-servicess h3 {
+        font-size: 70% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-servicess h2 {
+        font-size: 1.2rem !important;
+    }
+
+    .featured-servicess h3 {
+        font-size: 60% !important;
+    }
+
+    .language-switcher button {
+        padding: 5px 15px;
+    }
 }

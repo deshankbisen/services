@@ -1,0 +1,55 @@
+/* src/styles/hoverboxsections.css */
+.featured-services {
+    background: linear-gradient(to bottom, #f5c96c, #f7d28b, #f9e4a5, #fdf6e3, #ffffff);
+    padding: 2rem 0;
+    text-align: center;
+    overflow: visible;
+    box-shadow: #121009; /* If intended as a shadow, add proper values */
+}
+
+.featured-services .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.slick-slider {
+    width: 100%;
+    scrollbar-arrow-color: #a52020;
+}
+
+.featured-services .service {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 20%;
+    background: #44414100;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(235, 6, 6, 0.1);
+    transition: transform 0.3s;
+    margin: 1rem 0.5rem;
+}
+
+.featured-services .service img {
+    width: 20rem;
+    height: 10rem; /* Adjust height as needed */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.featured-services .service h3 {
+    font-size: 1.5rem;
+    margin: 15px 0 10px;
+    flex-wrap: wrap;
+    overflow-wrap: break-word; /* Ensure long words break and wrap */
+    word-wrap: break-word; /* Ensure long words wrap correctly */
+
+}
+
+.featured-services .service p {
+    font-size: .5rem;
+    color: #666;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}

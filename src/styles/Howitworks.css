@@ -1,0 +1,57 @@
+/* How It Works */
+.how-it-works {
+    background: linear-gradient(to bottom, #f5c96c, #f7d28b, #f9e4a5, #fdf6e3, #ffffff);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.how-it-works h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background: #f4b400;
+    display: block;
+    margin: 1rem auto;
+}
+
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.step {
+    width: 300px; /* Set a fixed width */
+    height: 400px; /* Set a fixed height */
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.step img {
+    width: 100%;
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border-radius: 10px;
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    margin: 15px 0 10px;
+}
+
+.step p {
+    font-size: 1rem;
+    color: #666;
+}

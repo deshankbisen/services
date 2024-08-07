@@ -1,99 +1,112 @@
-header {
+.navbar {
     background: linear-gradient(to bottom, #f5c96c, #f7d28b, #f9e4a5, #fdf6e3, #ffffff);
-    color: #0c0505;
-    padding: 1rem 4;
-    position: sticky !important;
-    top: 45;
+    padding: 1rem 4rem;
+    position: relative;
+    top: 0;
     z-index: 1000;
+    width: 100%;
+    overflow: visible;
+    z-index: 1002;
 }
 
-header .logo {
-    float: left !important;
+.logo .logo {
+    float: left;
     font-size: 1.5rem;
-    margin-top: -.5cm;
+    margin-top: -0.5cm;
     margin-left: -3cm;
 }
 
 header nav {
-    float: right !important;
-    
+    float: right;
 }
 
 header nav ul {
     display: flex;
-    list-style: none !important;
+    list-style: none;
     margin: 0;
-    padding: 0; /* Fixed padding issue */
-    flex-direction: row I !important;
+    padding: 0;
+    
 }
 
 header nav ul li {
-    display: flex !important;
     margin-left: 1rem;
-    position: relative; /* Make dropdown positioning relative to this */
-    flex-direction: row !important;
+    position: relative;
+    
 }
 
 header nav ul li a {
-    color: #c25252;
+    
+    color: blue; /* Set the navigation link color to blue */
     text-decoration: none;
-     
 }
 
 header nav ul li a:hover,
 header nav ul li a:focus {
-    color: #0a0a0a;
-}
-
-.login-btn {
-    background: #f4b465;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    color: #333;
-}
-
-.nav-link.active {
-    color: #f4f3f1;
+    color: #cc6f30;
 }
 
 /* Navbar Dropdown Menu */
 .nav-dropdown {
-    position: relative !important; /* Make sure dropdown is positioned correctly */
+    position: relative;
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%; /* Default positioning */
+    top: 100%;
     left: 0;
-    background-color: #fff;
+    background-color: #e13434;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    width: 200px; /* Adjust width as needed */
-    z-index: 1000; /* Ensure it appears on top */
+    width: 200px;
+    z-index: 1000;
 }
 
 .dropdown-menu li {
     margin: 5px 0;
+    color: #000;
 }
 
-
 .dropdown-menu a:hover {
-    background-color: #55be18;
+    background-color: #474847;
 }
 
 .nav-dropdown:hover .dropdown-menu {
-    display: inline-block;
+    display: block;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    header nav {
-        display: inline; /* Hide nav for small screens */
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
     }
-    
-    /* Adjust other styles as needed */
-}
 
+    header .logo {
+        margin: 0;
+        margin-bottom: 1rem;
+        float: none;
+    }
+
+    header nav {
+        float: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul li {
+        margin-left: 0;
+        margin-bottom: 1rem;
+    }
+}

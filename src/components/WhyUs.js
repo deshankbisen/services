@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import '../styles/WhyUs.css';
 import { useTranslation } from 'react-i18next';
+import Slider from 'react-slick';
 
 const WhyUS = () => {
     const { t, i18n } = useTranslation();

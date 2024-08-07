@@ -4,10 +4,11 @@ import '../styles/header.css';
 import weddingImage from '../assets/images/wedding.jpg';
 import grihpraveshImage from '../assets/images/grihpravesh.jpg';
 import satyanarayanjipoojaImage from '../assets/images/satyanarayanjipooja.png';
-import map from '../assets/images/Location.jpg';
-import panditji from '../assets/images/panditji.jpg';
-import calender from '../assets/images/calender.jpg';
-import worship from '../assets/images/worship.jpg';
+import Howitworks from '../components/Howitworks.js';
+import panditjiImage from '../assets/images/worship.jpg';
+import FeaturedServices from './FeaturedServices.js';
+import Testimonial from './Testimonial.js';
+
 
 const FindMyPanditji = () => {
     // const [showPopup, setShowPopup] = useState(false);
@@ -27,7 +28,9 @@ const FindMyPanditji = () => {
       time: '',
       poojaType: '',
       poojanSamagri: false,
+      mobilenumber: '',
     });
+    const [mobileNumberError, setMobileNumberError] = useState('');
 
     useEffect(() => {
         const fetchCities = async () => {
@@ -65,15 +68,12 @@ const FindMyPanditji = () => {
 
     const handleCityChange = (event) => {
         setSelectedCity(event.target.value);
-    };
-
-    const handleAreaChange = (event) => {
-        setSelectedArea(event.target.value);
+        setSelectedArea('');
     };
 
     const handleFindPanditJi = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/services/find_panditji/?city=${encodeURIComponent(selectedCity)}&area=${encodeURIComponent(selectedArea)}`);
+            const response = await fetch(`http://localhost:8000/services/find_panditji_city/?city=${encodeURIComponent(selectedCity)}`);
             const data = await response.json();
             setPanditJis(data);
             setIsPanditJiVisible(true);
@@ -81,6 +81,27 @@ const FindMyPanditji = () => {
         } catch (error) {
             console.error('Error fetching Pandit Jis:', error);
         }
+    };
+    const handleFindPanditJiinarea = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/services/find_panditji_area/?city=${encodeURIComponent(selectedCity)}&area=${encodeURIComponent(selectedArea)}`);
+            const data = await response.json();
+            setPanditJis(data);
+            setIsPanditJiVisible(true);
+            console.log('Pandit Jis loaded:', data);
+        } catch (error) {
+            console.error('Error fetching Pandit Jis:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (selectedArea) {
+            handleFindPanditJiinarea();
+        }
+    }, [selectedArea]);
+
+    const handleareafilter = (event) => {
+        setSelectedArea(event.target.value);
     };
 
     const handleInfoClick = (panditji) => {
@@ -99,7 +120,13 @@ const FindMyPanditji = () => {
   
       // Get CSRF token from cookies
       const csrftoken = getCookie('csrftoken');
-  
+      const mobilenumber = bookingDetails.mobilenumber;
+    if (!mobilenumber.startsWith('+91')){
+        setMobileNumberError('Mobile number must start with +91 or your country code');
+        return; // Stop form submission if validation fails
+          }
+
+        setMobileNumberError(''); // Clear error if validation passes
       try {
           const response = await fetch('http://localhost:8000/services/book_panditji/', {
               method: 'POST',
@@ -112,24 +139,29 @@ const FindMyPanditji = () => {
                   address: bookingDetails.address,
                   date: bookingDetails.date,
                   time: bookingDetails.time,
+                  duration:bookingDetails.duration,
                   poojaType: bookingDetails.poojaType,
                   poojanSamagri: bookingDetails.poojanSamagri,
-                  panditji: selectedPanditji.id,                  
+                  panditji: selectedPanditji.username,
+                  mobilenumber: bookingDetails.mobilenumber,                
               }),
           });
   
           const data = await response.json();
-          if (data.success) {
-              alert("Booking successful!");
+          if (data.status === 'success') {
+              alert(data.message);
               setShowBookingPopup(false);
               console.log('Booking successful');
-          } else {
-              alert("Error during booking.");
-              console.log('Error during booking:', data.error);
+          } else if(data.status === 'error' && data.message === 'Booking already exists'){
+            alert('Booking already exists');
+            console.log('Booking already exists');
+          }else{
+            alert(data.message);
           }
       } catch (error) {
-          console.error("Error:", error);
-      }
+        console.error('Error:', error);
+        alert('An unexpected error occurred');
+    }
   };
 
     const handleInputChange = (event) => {
@@ -155,6 +187,13 @@ const FindMyPanditji = () => {
         }
         return cookieValue;
     }
+    const getCurrentDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <div>
@@ -163,19 +202,13 @@ const FindMyPanditji = () => {
 
                 <section className="hero">
                     <div className="container">
-                        <h1>Find the Best Pandit Ji for Your Pooja Needs</h1>
-                        <p className="glowing-text">Book expert Pandit Ji services online for all your religious ceremonies.</p>
+                        <h1>Match with the Perfect Pandit Ji for Your Spiritual Journey</h1>
+                        <p className="glowing-text">Enjoy Expert Pandit Ji Services Complete with Fully Organized Poojan Samagri and Ritual Procedures.</p>
                         <div className="search-bar">
                             <select onChange={handleCityChange} value={selectedCity}>
                                 <option value="">Select City</option>
                                 {cities.map((city, index) => (
                                     <option key={index} value={city}>{city}</option>
-                                ))}
-                            </select>
-                            <select onChange={handleAreaChange} value={selectedArea} disabled={!areas.length}>
-                                <option value="">Select Area</option>
-                                {areas.map((area, index) => (
-                                    <option key={index} value={area}>{area}</option>
                                 ))}
                             </select>
                             <button onClick={handleFindPanditJi}>Find Pandit Ji</button>
@@ -185,18 +218,28 @@ const FindMyPanditji = () => {
                 {isPanditJiVisible && (
                     <section className="available-panditji">
                         <div className="panditjicontainer">
-                            <h2>Available Panditji In Your Area</h2>
+                            <h2>Available Panditji In Your City</h2>
+                            <div className="search-bar">
+                            <select onChange={handleareafilter} value={selectedArea} disabled={!areas.length}>
+                                <option value="">Select Area</option>
+                                
+                                {areas.map((area, index) => (
+                                    <option key={index} value={area}>{area}</option>
+                                ))}
+                                 </select>
+                                 </div>
                             {panditJis.length > 0 ? (
                                 <div className="panditji-container">
                                     {panditJis.map((panditji, index) => (
                                         <div key={index} className="panditji-box"> 
-                                        <img src={panditji} />                                     
+                                        <img src={panditjiImage} alt="Select Pandit Ji"/> 
                                             <h3>{panditji.first_name} {panditji.last_name}</h3>
-                                            <p>{panditji.experience}</p>
+                                            <p class="text-center">Panditji has {panditji.experience} years of experience.</p>
                                             <div className="options">
                                                 <button onClick={() => handleInfoClick(panditji)}>Info</button>
                                                 <button onClick={() => handleBookingClick(panditji)}>Booking</button>
-                                                </div>
+                                             </div>                                           
+                           
                                         </div>
                                     ))}
                                 </div>
@@ -256,6 +299,7 @@ const FindMyPanditji = () => {
                                         name="date"
                                         value={bookingDetails.date}
                                         onChange={handleInputChange}
+                                        min={getCurrentDate()}
                                         required
                                     />
                                 </label>
@@ -269,6 +313,7 @@ const FindMyPanditji = () => {
                                         required
                                     />
                                 </label>
+                                <input type="number" name="duration" value={bookingDetails.duration} onChange={handleInputChange} placeholder="Duration (hours)" />
                                 <label>
                                     Type of Pooja:
                                     <input
@@ -288,72 +333,25 @@ const FindMyPanditji = () => {
                                         onChange={handleInputChange}
                                     />
                                 </label>
+                                <label>
+                                    Mobile Number:
+                                    <input
+                                        type="tel"                                        
+                                        name="mobilenumber"
+                                        value={bookingDetails.mobilenumber}
+                                        onChange={handleInputChange}
+                                    />
+                                     {mobileNumberError && <p style={{ color: 'red' }}>{mobileNumberError}</p>}
+                                </label>
                                 <button type="submit">Submit</button>
                             </form>
                         </div>
                     </div>
                 )}
-                <section className="featured-services">
-                    <div className="container">
-                        <h2>Featured Services</h2>
-                        <div className="services">
-                            <div className="service">
-                                <img src={weddingImage} alt="Wedding Pooja" />
-                                <h3>Wedding Pooja</h3>
-                                <p>Expert Pandits for your wedding ceremonies.</p>
-                            </div>
-                            <div className="service">
-                                <img src={grihpraveshImage} alt="Griha Pravesh" />
-                                <h3>Griha Pravesh</h3>
-                                <p>Ensure a blessed new home with Griha Pravesh Pooja.</p>
-                            </div>
-                            <div className="service">
-                                <img src={satyanarayanjipoojaImage} alt="Satyanarayan Pooja" />
-                                <h3>Satyanarayan Pooja</h3>
-                                <p>Book a Pandit Ji for Satyanarayan Pooja.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    <FeaturedServices />
  
-                <section className="how-it-works">
-                    <div className="container">
-                        <h2>How It Works</h2>
-                        <div className="steps">
-                            <div className="step">
-                                <img src={map} alt="Choose Location & Pooja" />
-                                <h3>Choose Location & Pooja</h3>
-                            </div>
-                            <div className="step">
-                                <img src={panditji} alt="Select Pandit Ji" />
-                                <h3>Select Pandit Ji</h3>
-                            </div>
-                            <div className="step">
-                                <img src={calender} alt="Schedule & Book" />
-                                <h3>Schedule & Book</h3>
-                            </div>
-                            <div className="step">
-                                <img src={worship} alt="Enjoy Pooja" />
-                                <h3>Enjoy Pooja</h3>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="testimonials">
-                    <div className="container">
-                        <h2>Testimonials</h2>
-                        <div className="testimonial-carousel">
-                            <div className="testimonial">
-                                <p>"The best Pandit Ji service I have ever used. Highly recommend!"</p>
-                                <h3>John Doe</h3>
-                            </div>
-                            <div className="testimonial">
-                                <p>"Professional and reliable. Made our wedding ceremonies smooth."</p>
-                                <h3>Jane Smith</h3>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+             
+                    <Testimonial />
             </main>
             
         </div>

@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import '../styles/RegisterPanditji.css'
+import '../styles/RegisterPanditji.css';
 
 const RegisterPanditji = () => {
     const [showPopup, setShowPopup] = useState(false);
+    const [mobileNumberError, setMobileNumberError] = useState('');
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         const form = event.target;
         const formData = new FormData(form);
+
+        // Validate mobile number
+        const mobileNumber = formData.get('mobileNumber');
+        if (!mobileNumber.startsWith('+91')) {
+            setMobileNumberError('Mobile number must start with +91 or your country code');
+            return; // Stop form submission if validation fails
+        }
+
+        setMobileNumberError(''); // Clear error if validation passes
 
         // Get CSRF token from cookies
         const csrftoken = getCookie('csrftoken');
@@ -56,7 +66,7 @@ const RegisterPanditji = () => {
 
     return (
         <div>
-            <button id="registerPanditjiBtn" onClick={() => setShowPopup(true)}>Be a Pandit Ji</button>
+            <button id="registerPanditjiBtn" onClick={() => setShowPopup(true)}>Register Panditji</button>
             {showPopup && (
                 <div id="panditjiPopup" className="popup" onClick={(e) => {
                     if (e.target === e.currentTarget) {
@@ -89,10 +99,17 @@ const RegisterPanditji = () => {
                             <input type="text" id="area" name="area" required />
 
                             <label htmlFor="mobileNumber">Mobile Number:</label>
-                            <input type="tel" id="mobileNumber" name="mobileNumber" required />
+                            <input
+                                type="tel"
+                                id="mobileNumber"
+                                maxLength={13} // Allow room for +91 and 10 digits
+                                name="mobileNumber"
+                                required
+                            />
+                            {mobileNumberError && <p style={{ color: 'red' }}>{mobileNumberError}</p>}
 
                             <label htmlFor="fileUpload">Upload Document (JPG, PDF, PNG):</label>
-                            <input type="file" id="fileUpload" name="fileUpload" accept=".jpg, .jpeg, .png, .pdf" required />
+                            <input type="file" id="fileUpload" name="fileUpload" accept=".jpg, .jpeg, .png, .pdf" />
 
                             <button type="submit">Register</button>
                         </form>

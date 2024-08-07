@@ -1,8 +1,8 @@
 /* Testimonials */
 .testimonials {
+    background: linear-gradient(to bottom, #f5c96c, #f7d28b, #f9e4a5, #fdf6e3, #ffffff);
     padding: 2rem 0;
     text-align: center;
-    background: #f9f9f9;
 }
 
 .testimonials h2 {
@@ -15,7 +15,6 @@
     content: '';
     width: 50px;
     height: 3px;
-    background: #f4b400;
     display: block;
     margin: 1rem auto;
 }
@@ -27,7 +26,6 @@
 
 .testimonial {
     width: 45%;
-    background: #fff;
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
